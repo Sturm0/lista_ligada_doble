@@ -11,21 +11,22 @@ struct nodo {
 };
 struct lista {
 	nodo* cabeza;
+	bool vacio = true;
 };
 int agregar_elemento(lista* la_lista,int valor) {
 	//agrega un nodo al inicio de la lista
+	nodo* nuev_prim = new nodo;
 	nodo* ant_prim = la_lista->cabeza; //el que anteriormente era primero
-	std::cout << ant_prim << std::endl;
-	nodo primero;
-	primero.lig.pre = nullptr;
-	primero.lig.suc = ant_prim;
-	ant_prim->lig.pre = &primero;
-	la_lista->cabeza = &primero;
-
-	primero.informacion = valor; 
-	std::cout << ant_prim << std::endl;
-	std::cout << "PRIMERO info: " << primero.informacion << std::endl;
-	//puede ser el problema que aca muere primero
+	nuev_prim->lig.pre = nullptr;
+	if (la_lista->vacio) {
+		nuev_prim->lig.suc = nullptr;
+	} else {
+		nuev_prim->lig.suc = ant_prim;	
+	}
+	la_lista->vacio = false;
+	ant_prim->lig.pre = nuev_prim;
+	la_lista->cabeza = nuev_prim;
+	nuev_prim->informacion = valor; 
 	return valor;
 }
 int main()
@@ -53,26 +54,11 @@ int main()
 	//hago que el tercero apunte al segundo y a nullptr
 	tercero.lig.pre = &segundo;
 	tercero.lig.suc = nullptr;
-	agregar_elemento(&lista_ligada1,200);
-	lista_ligada1.cabeza->informacion = 35;
-	std::cout << lista_ligada1.cabeza->lig.suc->informacion << std::endl;
-	std::cout << "recorcholis: " << lista_ligada1.cabeza->informacion << std::endl;
-	std::cout << "tamano del recorcholis: " << sizeof(lista_ligada1.cabeza->informacion) << std::endl;
-	std::cout << "tamano entero: " << sizeof(int) << std::endl;
-	std::cout << "tamano entero: " << sizeof(int*) << std::endl;
-
+	agregar_elemento(&lista_ligada1,350);
 	
 	//ciclo de iteracion para recorrer la lista ligada doble
 	for (nodo* ptr = lista_ligada1.cabeza; ptr ; ptr = ptr->lig.suc)
 	{
 		std::cout << ptr->informacion << std::endl;
 	}
-	
-	/*
-	std::cout << "-----------------" << std::endl;
-	lista otra_lista;
-	agregar_elemento(&otra_lista,150);
-	std::cout << otra_lista.cabeza->lig.suc << std::endl;
-	*/
-
 }
