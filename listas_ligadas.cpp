@@ -1,12 +1,13 @@
 #include <iostream>
 //la idea de este programa es intentar implementar una version basica de una lista ligada doble
 struct nodo;
-struct liga {
+struct liga { 
+	//entiendase liga cómo enlace/cadena, en este caso, a otro nodo
 	nodo* pre; //predecesor
 	nodo* suc; //sucesor
 };
 struct nodo {
-	liga lig;
+	liga lig; 
 	int informacion;
 };
 struct lista {
@@ -15,7 +16,7 @@ struct lista {
 };
 int agregar_elemento(lista& la_lista,int valor) {
 	//agrega un nodo al inicio de la lista
-	nodo* nuev_prim = new nodo;
+	nodo* nuev_prim = new nodo; //nuevo primer elemento
 	nuev_prim->lig.pre = nullptr;
 	if (la_lista.vacio) {
 		nuev_prim->lig.suc = nullptr;
